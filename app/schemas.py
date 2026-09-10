@@ -16,4 +16,4 @@ class LivroResposta(BaseModel):
     disponivel: bool
 
     class Config:
-        from_attributes = Trues
+        from_attributes = True
