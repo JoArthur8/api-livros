@@ -1,8 +1,6 @@
-from collections.abc import Generator
-
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from sqlalchemy import create_engine
-from sqlalchemy.orm import DeclarativeBase, Session, sessionmaker
+from sqlalchemy.orm import DeclarativeBase, sessionmaker
 
 
 class Configuracoes(BaseSettings):
@@ -29,11 +27,9 @@ criar_sessao = sessionmaker(bind=mecanismo_banco, autoflush=False, autocommit=Fa
 class BaseBanco(DeclarativeBase):
     pass
 
-
-def obter_sessao_banco() -> Generator[Session, None, None]:
-    sessao_banco = criar_sessao()
-
+def obter_sessao_banco():
+    sessao = criar_sessao()
     try:
-        yield sessao_banco
+        yield sessao
     finally:
-        sessao_banco.close()
+        sessao.close()
